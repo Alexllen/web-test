@@ -1,4 +1,4 @@
 # web-test
-A test web project
-just including login page and logincheck.
-To help me understand the JSP and Servlet ,practice the use of mysql.
+A test web project using the Spring+Hibernate+basic(Servlet+JSP+Filter)
+This is a simple forum website project.
+Including the basic function of pulling topic and adding comment.
