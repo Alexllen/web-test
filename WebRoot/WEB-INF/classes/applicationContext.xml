@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	xmlns:tx="http://www.springframework.org/schema/tx">
+
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="url" value="jdbc:mysql://localhost:3306/forum"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
+		<property name="mappingResources">
+			<list>
+				<value>Category.hbm.xml</value>
+				<value>Comment.hbm.xml</value>
+				<value>Dlb.hbm.xml</value>
+				<value>Topic.hbm.xml</value>
+				<value>Type.hbm.xml</value>
+				<value>User.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="CategoryDao" class="org.daoImp.CategoryDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="CommentDao" class="org.daoImp.CommentDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="DlbDao" class="org.daoImp.DlbDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UserDao" class="org.daoImp.UserDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TypeDao" class="org.daoImp.TypeDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="TopicDao" class="org.daoImp.TopicDaoImp" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="ssf">
+			<ref bean="sessionFactory" />
+		</property>
+	</bean>
+	<bean id="UserService" class="org.serviceImp.UserServiceImp"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="userdao">
+			<ref bean="UserDao" />
+		</property>
+		<property name="dlbdao">
+			<ref bean="DlbDao" />
+		</property>
+	</bean><bean id="TopicService" class="org.serviceImp.TopicServiceImp" abstract="false" lazy-init="default" autowire="default">
+		<property name="topicdao">
+			<ref bean="TopicDao" />
+		</property>
+		<property name="typedao">
+			<ref bean="TypeDao" />
+		</property>
+	</bean>
+	<bean id="CommentService" class="org.serviceImp.CommentServiceImp" abstract="false" lazy-init="default" autowire="default">
+		<property name="comdao">
+			<ref bean="CommentDao" />
+		</property>
+		<property name="topicdao">
+			<ref bean="TopicDao" />
+		</property>
+	</bean><bean id="CategoryService" class="org.serviceImp.CategoryServiceImp" abstract="false" lazy-init="default" autowire="default">
+		<property name="categorydao">
+			<ref bean="CategoryDao" />
+		</property>
+	</bean>
+	<bean id="TypeService" class="org.serviceImp.TypeServiceImp" abstract="false" lazy-init="default" autowire="default">
+		<property name="typedao">
+			<ref bean="TypeDao" />
+		</property>
+	</bean><bean id="Confirm" class="org.servlet.Confirm" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="userservice">
+			<ref bean="UserService" />
+		</property>
+	</bean><bean id="Main" class="org.servlet.Main" abstract="false" lazy-init="default" autowire="default">
+		<property name="cgservice">
+			<ref bean="CategoryService" />
+		</property>
+		<property name="tpservice">
+			<ref bean="TypeService" />
+		</property>
+	</bean>
+	<bean id="AddComment" class="org.servlet.AddComment" abstract="false" lazy-init="default" autowire="default">
+		<property name="comservice">
+			<ref bean="CommentService" />
+		</property>
+	</bean><bean id="ShowTopic" class="org.servlet.ShowTopic" abstract="false" lazy-init="default" autowire="default">
+		<property name="tpservice">
+			<ref bean="TopicService" />
+		</property>
+		<property name="comservice">
+			<ref bean="CommentService" />
+		</property>
+		<property name="uservice">
+			<ref bean="UserService" />
+		</property>
+	</bean><bean id="AddTopic" class="org.servlet.AddTopic" abstract="false" lazy-init="default" autowire="default">
+		<property name="tpservice">
+			<ref bean="TopicService" />
+		</property>
+	</bean><bean id="DoRegister" class="org.servlet.DoRegister" abstract="false"
+		lazy-init="default" autowire="default">
+		<property name="userservice">
+			<ref bean="UserService" />
+		</property>
+	</bean><bean id="TopicAll" class="org.servlet.TopicAll" abstract="false" lazy-init="default" autowire="default">
+		<property name="tpservice">
+			<ref bean="TypeService" />
+		</property>
+	</bean>
+	
+	
+	
+	<bean id="ConfirmFilter" class="org.filter.ConfirmFilter"
+		abstract="false" lazy-init="default" autowire="default">
+		<property name="userservice">
+			<ref bean="UserService" />
+		</property>
+	</bean>
+	</beans>

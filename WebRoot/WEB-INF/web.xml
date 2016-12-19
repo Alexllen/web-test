@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+  <display-name>MyForum</display-name>
+  <welcome-file-list>
+    <welcome-file>Main.do</welcome-file>
+  </welcome-file-list>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <servlet>
+    <description>Mainpage</description>
+    <display-name>MainPage</display-name>
+    <servlet-name>Main</servlet-name>
+    <servlet-class>org.servlet.Main</servlet-class>
+  </servlet>
+  <servlet>
+    <description>DoLogin</description>
+    <display-name>DoLogin</display-name>
+    <servlet-name>DoLogin</servlet-name>
+    <servlet-class>org.servlet.DoLogin</servlet-class>
+  </servlet>
+  <servlet>
+    <description>DoRegister</description>
+    <display-name>DoRegister</display-name>
+    <servlet-name>DoRegister</servlet-name>
+    <servlet-class>org.servlet.DoRegister</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>Confirm</servlet-name>
+    <servlet-class>org.servlet.Confirm</servlet-class>
+  </servlet>
+  <servlet>
+    <description>getAllTopicByType</description>
+    <display-name>getAllTopicByType</display-name>
+    <servlet-name>TopicAll</servlet-name>
+    <servlet-class>org.servlet.TopicAll</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ShowTopic</servlet-name>
+    <servlet-class>org.servlet.ShowTopic</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddComment</servlet-name>
+    <servlet-class>org.servlet.AddComment</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddTopic</servlet-name>
+    <servlet-class>org.servlet.AddTopic</servlet-class>
+  </servlet>
+
+
+
+
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/Main.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DoLogin</servlet-name>
+    <url-pattern>/DoLogin.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DoRegister</servlet-name>
+    <url-pattern>/DoRegister.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Confirm</servlet-name>
+    <url-pattern>/Confirm.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TopicAll</servlet-name>
+    <url-pattern>/TopicAll.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ShowTopic</servlet-name>
+    <url-pattern>/ShowTopic.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddComment</servlet-name>
+    <url-pattern>/AddComment.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddTopic</servlet-name>
+    <url-pattern>/AddTopic.do</url-pattern>
+  </servlet-mapping>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:applicationContext.xml</param-value>
+  </context-param>
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>org.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>resType</param-name>
+      <param-value>text/html; charset=utf-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ignore</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+    <filter>
+        <filter-name>ConfirmFilter</filter-name>
+        <filter-class>org.filter.ConfirmFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ConfirmFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+    </filter-mapping>
+</web-app>
